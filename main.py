@@ -5,16 +5,15 @@ Allows mobile devices to act as secondary monitors over local network/Wi-Fi.
 Compatible with X11 (primary), Wayland support limited.
 """
 
-import socket
-import threading
-import time
-import subprocess
-import sys
-from PIL import ImageGrab
-import cv2
-import numpy as np
-import pyautogui
-import ffmpeg
+import platform
+
+# Import macOS support if on macOS
+if platform.system() == 'Darwin':
+    try:
+        import macos_support
+        print("macOS support loaded")
+    except ImportError:
+        print("macOS support module not found")
 
 class LinuxSpacedeskServer:
     def __init__(self, host='0.0.0.0', port=5900, display_mode='X11', fps=30, quality=90):

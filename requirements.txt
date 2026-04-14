@@ -4,3 +4,4 @@ numpy
 pyautogui
 ffmpeg-python
 PyQt5
+pyinstaller

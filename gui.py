@@ -4,15 +4,7 @@ Linux Spacedesk Clone - GUI Application
 Provides a graphical interface to control the spacedesk server.
 """
 
-import sys
-import threading
-from PyQt5.QtWidgets import (QApplication, QMainWindow, QWidget, QVBoxLayout,
-                             QHBoxLayout, QPushButton, QLabel, QTextEdit,
-                             QGroupBox, QSpinBox, QComboBox, QCheckBox)
-from PyQt5.QtCore import QTimer, pyqtSignal, QObject
-from PyQt5.QtGui import QFont, QPalette, QColor
-
-from main import LinuxSpacedeskServer
+import platform
 
 class ServerSignals(QObject):
     """Signals for thread communication"""
@@ -81,8 +73,12 @@ class SpacedeskGUI(QMainWindow):
         display_layout = QHBoxLayout()
         display_layout.addWidget(QLabel('Display Server:'))
         self.display_combo = QComboBox()
-        self.display_combo.addItems(['X11', 'Wayland'])
-        self.display_combo.setCurrentText('X11')
+        if platform.system() == 'Darwin':
+            self.display_combo.addItems(['macOS'])
+            self.display_combo.setCurrentText('macOS')
+        else:
+            self.display_combo.addItems(['X11', 'Wayland'])
+            self.display_combo.setCurrentText('X11')
         display_layout.addWidget(self.display_combo)
         display_layout.addStretch()
         config_layout.addLayout(display_layout)
